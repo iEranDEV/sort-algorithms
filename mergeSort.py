@@ -22,4 +22,3 @@ def merge(leftSide, rightSide):
     if rightSide:
         result += rightSide
     return result
-

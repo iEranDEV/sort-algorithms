@@ -33,7 +33,7 @@ data = []
 if inputType == 1:
     size = int(input("Podaj długość ciągu: "))
     maxValue = int(input("Podaj maksymalną wartość w ciągu: "))
-    data = utils.generate(size, maxValue)
+    data = utils.generate(size)
     print("Wygenerowany ciąg:", " ".join(list(map(str, data))))
 elif inputType == 2:
     data = list(map(int, input("Podaj ciąg (1 2 3 ...): ").split()))
