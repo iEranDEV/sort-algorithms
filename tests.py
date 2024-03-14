@@ -3,17 +3,18 @@ import utils
 import quickSort
 import timeit
 import sys
+import math
 from heapSort import heapSort
 from shellSort import shellSort
 
 sys.setrecursionlimit(10**6)
 
-sizes = [20, 100, 250, 500, 1000, 2000, 5000, 10000, 20000, 50000]
+sizes = [20, 250, 500, 1000, 2000, 5000, 10000, 20000, 35000, 50000]
 arrTypes = ['losowy', 'rosnący', 'malejący', 'v-kształtny', 'a-kształtny']
-algTypes = ['mergeSort', 'shellSort', 'quickItSort', 'heapSort', 'quickRecSort']
+algTypes = ['mergeSort', 'shellSort', 'quickItSort', 'heapSort']
 
 arrays = {}
-ile_ciagow = 1
+ile_ciagow = 5
 
 # Generowanie ciągów
 for arrType in arrTypes:
@@ -40,7 +41,7 @@ for algType in algTypes:
     for size in sizes:
         print(f'  SIZE : {size}')
         for arrType in arrTypes:
-            sum = 0
+            times = []
             for temp in arrays[arrType][size]:
                 data = temp[:]
                 t0 = timeit.default_timer()
@@ -55,5 +56,13 @@ for algType in algTypes:
                 elif algType == 'quickItSort':
                     quickSort.quickSortIter(data)
                 t1 = timeit.default_timer()
-                sum += (t1-t0)
-            print('    typ {type} : {time:.6f}s'.format(type=arrType, time=(sum / ile_ciagow)))
+                times.append(t1-t0)
+            sum = 0
+            for time in times:
+                sum += time
+            avg = sum / ile_ciagow
+            odchylenie = 0
+            for time in times:
+                odchylenie += (time - avg)**2
+            odchylenie = math.sqrt(odchylenie / len(times))
+            print('    typ {type} : {time:.6f}s, ({odchylenie:.6f})'.format(type=arrType, time=(avg), odchylenie=odchylenie))
